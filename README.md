@@ -11,3 +11,11 @@ Client side web pages with text-panes that interact with liquid-server
    - pandoc with TWO text panels + SERVER 
    - pandoc with MANY text panels + SERVER 
  
+### One Text Panel
+
+HEREHEREHERE
+
+Write pandoc filter that uses templates/codeblock.template to
+generate a single text panel from lhs/foo.lhs 
+
+
