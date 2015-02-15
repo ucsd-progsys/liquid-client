@@ -4,8 +4,8 @@
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
 
-var numEditors  = 2;
-var progEditor  = [];
+var numEditors = $('.welleditor').length;
+var progEditor = [];
 
 function programId(i)     { return "program-"      + i; }
 function programPaneId(i) { return "program-pane-" + i; }

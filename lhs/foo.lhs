@@ -2,9 +2,7 @@
 title: This is my thing
 ---
 
-
-<button class="btn btn-info" type="button>Check</button>
-
+Here is the world famous **factorial** function. 
 
 \begin{code}
 {-@ fib :: Nat -> Nat @-}
