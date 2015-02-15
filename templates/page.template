@@ -16,6 +16,15 @@
 
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
+
+    .ace_editor div {
+      font: inherit!important;
+    -webkit-font-feature-settings: normal;
+    -moz-font-feature-settings: normal;
+    font-feature-settings: normal;
+    }   
+
+    
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
@@ -54,10 +63,10 @@ $body$
   <script src="../js/ace/ace.js" type="text/javascript" charset="utf-8"></script> 
   <script src="../js/ace/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/ace/mode-haskell.js"  type="text/javascript" charset="utf-8"></script>
-  <script src="../js/tooltip.js"></script> 
-  <script src="../js/annot.js"></script> 
-  <!-- <script src="config.js"></script> -->
-  <script src="../js/liquid.js"></script>
+  <script src="../js/liquid/tooltip.js"></script> 
+  <script src="../js/liquid/annot.js"></script> 
+  <script src="../js/liquid/config.js"></script> 
+  <script src="../js/liquid/liquid.js"></script>
    
 </body>
 </html>
