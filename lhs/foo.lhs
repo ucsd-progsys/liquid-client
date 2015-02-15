@@ -20,6 +20,13 @@ fib n   = fib (n-1) + fib (n-2)
 
 In the context of foo, I must report.
 
+\begin{code}
+append :: [a] -> [a] -> [a]
+append []     ys = ys 
+append (x:xs) ys = x : append xs ys
+\end{code}
+
+
 Bar
 ---
 
