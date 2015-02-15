@@ -36,7 +36,7 @@ txBlock t r (CodeBlock (id, classes, namevals) contents)
     where
 
 txBlock _ _ z
-  = return $ trace ("block:" ++ show z) z
+  = return z -- $ trace ("block:" ++ show z) z
 
 isCode  = ("haskell" `elem`)
 

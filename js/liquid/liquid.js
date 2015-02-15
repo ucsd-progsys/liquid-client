@@ -1,60 +1,49 @@
 'use strict';
 
-/*******************************************************************************r
-/************** Extract Demo from URL ******************************************/
-/*******************************************************************************/
-
-
-
-function getDemo(name){
-  var d = allDemos[name];
-  var res = { "name" : d.name , "file" : name };
-  return res;
-}
-
-function getDemos(ty){ 
-  var a = [];
-  for (var k in allDemos) { 
-    if (allDemos[k].type == ty) 
-      a.push(getDemo(k));
-  };
-  return a;
-}
-
-function getDefaultDemo(){
-  var cat = allCategories[0].type;
-  var ds  = getDemos(cat);
-  // debugDemo = ds[1];
-  return ds[1];
-}
-
-function getCategories(){
-  function tx(c){return {type: c.type, name: c.name, demos: getDemos(c.type)}};
-  return allCategories.map(tx);
-}
-  
-
 /*******************************************************************************/
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
 
-var progEditor  = ace.edit("program");
+var numEditors  = 2;
+var progEditor  = [];
 
-progEditor.setTheme(editorTheme);                   // progEditor.setTheme("ace/theme/xcode");
-var SrcMode     = require(editorMode).Mode;         // var SrcMode     = require("ace/mode/haskell").Mode;
-progEditor.getSession().setMode(new SrcMode());
-var typeTooltip = new TokenTooltip(progEditor, getAnnot);
+function programId(i)     { return "program-"      + i; }
+function programPaneId(i) { return "program-pane-" + i; }
 
-function resizeProgEditor() {
-  var w = $('#program-pane').width();
-  return $('#program').width(w);
+// Create Editors
+for (var i = 0; i < numEditors; i++){
+    progEditor[i] = ace.edit(programId(i));
+    progEditor[i].setTheme(editorTheme);    // progEditor.setTheme("ace/theme/xcode");
+    var SrcMode   = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
+    progEditor[i].getSession().setMode(new SrcMode());
+    var typeTooltip = new TokenTooltip(progEditor[i], getAnnot);
+}
+
+function resizeProgEditorWidth() {
+    for (var i = 0; i < numEditors; i++){
+        var ppid = '#' + programPaneId(i);
+        var pid  = '#' + programId(i);
+        var w = $(ppid).width();
+        $(pid).width(w);
+    }
 };
 
+
 //listen for changes
-$(window).resize(resizeProgEditor);
+$(window).resize(resizeProgEditorWidth);
 
 //set initially
-resizeProgEditor();
+resizeProgEditorWidth();
+
+function resizeProgEditorHeight(ht) {
+    for (var i = 0; i < numEditors; i++){
+        var ppid = '#' + programPaneId(i);
+        var pid  = '#' + programId(i);
+        $(ppid).height(ht); 
+        $(pid).height(ht-60);
+    }
+};
+
 
 // Resize Editor
 function toggleEditorSize(x){
@@ -62,8 +51,7 @@ function toggleEditorSize(x){
   if (x.isFullScreen){
     ht = 600;
   };
-  $("#program-pane").height(ht); 
-  $("#program").height(ht-60);
+  resizeProgEditorHeight(ht);
 }
 
 
