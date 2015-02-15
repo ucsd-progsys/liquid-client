@@ -50,7 +50,7 @@ pad tplt n s   = L.unpack $ substitute tplt ctx
   where
     tn         = T.pack $ show n 
     ts         = T.pack $ prefix ++ s
-    prefix     = "-- block: " ++ show n ++ "\n"
+    prefix     = "" -- """-- block: " ++ show n ++ "\n"
 
     ctx        :: T.Text -> T.Text 
     ctx "code" = ts 

@@ -14,9 +14,5 @@
   </div> 
   <br>
   -->
-  <div id="program-$id" style="height: 85%"> 
-  -- Block: $id
-  $code
-  </div>
+  <div id="program-$id" class="programbox">$code</div>
 </div>
-

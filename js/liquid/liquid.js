@@ -4,6 +4,7 @@
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
 
+var SrcMode    = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
 var numEditors = $('.welleditor').length;
 var progEditor = [];
 
@@ -12,11 +13,18 @@ function programPaneId(i) { return "program-pane-" + i; }
 
 // Create Editors
 for (var i = 0; i < numEditors; i++){
-    progEditor[i] = ace.edit(programId(i));
-    progEditor[i].setTheme(editorTheme);    // progEditor.setTheme("ace/theme/xcode");
-    var SrcMode   = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
-    progEditor[i].getSession().setMode(new SrcMode());
-    var typeTooltip = new TokenTooltip(progEditor[i], getAnnot);
+    var pi = ace.edit(programId(i));
+    pi.renderer.setShowGutter(false)
+    pi.setShowPrintMargin(false);
+    pi.setOptions({ maxLines: Infinity});
+    pi.setTheme(editorTheme);    // progEditor.setTheme("ace/theme/xcode");
+    pi.setOptions({
+        fontFamily: "Source Code Pro",
+        fontSize: "13pt"
+    });
+    pi.getSession().setMode(new SrcMode());
+    var typeTooltip = new TokenTooltip(pi, getAnnot);
+    progEditor[i] = pi; 
 }
 
 function resizeProgEditorWidth() {
@@ -39,17 +47,17 @@ function resizeProgEditorHeight(ht) {
     for (var i = 0; i < numEditors; i++){
         var ppid = '#' + programPaneId(i);
         var pid  = '#' + programId(i);
-        $(ppid).height(ht); 
-        $(pid).height(ht-60);
+       //  $(ppid).height(ht); 
+      //  $(pid).height(ht-60);
     }
 };
 
 
 // Resize Editor
 function toggleEditorSize(x){
-  var ht = 400;
+  var ht = 200;
   if (x.isFullScreen){
-    ht = 600;
+    ht = 300;
   };
   resizeProgEditorHeight(ht);
 }

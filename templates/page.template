@@ -13,6 +13,7 @@
 -->
 
     <link rel="stylesheet" type="text/css" href="../css/rust-book.css">
+    <link rel="stylesheet" type="text/css" href="../css/editor.css">
 
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
@@ -24,6 +25,13 @@
     font-feature-settings: normal;
     }   
 
+    .programbox {
+      // border: 1px solid black;
+      // margin-bottom: 5px;
+      height: 200px;
+      width: 300px;
+    }
+    
     
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -60,9 +68,9 @@ $body$
 
 <!-- JavaScript below! ============================================== -->
 
-  <script src="../js/ace/ace.js" type="text/javascript" charset="utf-8"></script> 
-  <script src="../js/ace/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/ace/mode-haskell.js"  type="text/javascript" charset="utf-8"></script>
+  <script src="../js/ace-new/ace.js" type="text/javascript" charset="utf-8"></script> 
+  <script src="../js/ace-new/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/ace-new/mode-haskell.js"  type="text/javascript" charset="utf-8"></script>
   <script src="../js/liquid/tooltip.js"></script> 
   <script src="../js/liquid/annot.js"></script> 
   <script src="../js/liquid/config.js"></script> 
