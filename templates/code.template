@@ -1,4 +1,4 @@
-<div id="program-pane-$id" class="welleditor" style="background:#fff">
+<div id="program-pane-$id" class="welleditor" style="background:#fff; position:relative">
   <!--
   <div class="form-horizontal">
     <button class="btn btn-info" type="button" ng-show="isUnknown" ng-click="verifySource()">Check</button>
@@ -14,5 +14,8 @@
   </div> 
   <br>
   -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="color:blue; z-index:1">
+    <span class="glyphicon glyphicon-play"></span>
+  </button>
   <div id="program-$id" class="programbox">$code</div>
 </div>

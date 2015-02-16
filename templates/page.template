@@ -6,33 +6,18 @@
     <meta name="generator" content="rustdoc">
     <title>$title$</title>
 
-    <link href="../css/bootstrap-readable.css" rel="stylesheet">
-    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
-<!--
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!--
     <link href="../css/bootswatch.css" rel="stylesheet">
--->
+    -->
 
     <link rel="stylesheet" type="text/css" href="../css/rust-book.css">
     <link rel="stylesheet" type="text/css" href="../css/editor.css">
 
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-
-    .ace_editor div {
-      font: inherit!important;
-    -webkit-font-feature-settings: normal;
-    -moz-font-feature-settings: normal;
-    font-feature-settings: normal;
-    }   
-
-    .programbox {
-      // border: 1px solid black;
-      // margin-bottom: 5px;
-      height: 200px;
-      width: 300px;
-    }
-    
-    
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
@@ -58,6 +43,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <script type="text/javascript" src="../js/jquery/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../js/angular/angular.js"></script>
 <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
+
+
+
 </head>
 
 <body> 

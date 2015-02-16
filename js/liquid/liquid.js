@@ -27,40 +27,41 @@ for (var i = 0; i < numEditors; i++){
     progEditor[i] = pi; 
 }
 
-function resizeProgEditorWidth() {
-    for (var i = 0; i < numEditors; i++){
-        var ppid = '#' + programPaneId(i);
-        var pid  = '#' + programId(i);
-        var w = $(ppid).width();
-        $(pid).width(w);
-    }
-};
+// SKIP IN CSS function resizeProgEditorWidth() {
+// SKIP IN CSS     for (var i = 0; i < numEditors; i++){
+// SKIP IN CSS         var ppid = '#' + programPaneId(i);
+// SKIP IN CSS         var pid  = '#' + programId(i);
+// SKIP IN CSS         var w = $(ppid).width();
+// SKIP IN CSS         // SKIP the next thing, done in CSS
+// SKIP IN CSS         // $(pid).width(w);
+// SKIP IN CSS     }
+// SKIP IN CSS };
 
 
 //listen for changes
-$(window).resize(resizeProgEditorWidth);
+// SKIP IN CSS $(window).resize(resizeProgEditorWidth);
 
 //set initially
-resizeProgEditorWidth();
+// SKIP IN CSS resizeProgEditorWidth();
 
-function resizeProgEditorHeight(ht) {
-    for (var i = 0; i < numEditors; i++){
-        var ppid = '#' + programPaneId(i);
-        var pid  = '#' + programId(i);
-       //  $(ppid).height(ht); 
-      //  $(pid).height(ht-60);
-    }
-};
-
-
-// Resize Editor
-function toggleEditorSize(x){
-  var ht = 200;
-  if (x.isFullScreen){
-    ht = 300;
-  };
-  resizeProgEditorHeight(ht);
-}
+// SKIP IN CSS function resizeProgEditorHeight(ht) {
+// SKIP IN CSS     for (var i = 0; i < numEditors; i++){
+// SKIP IN CSS         var ppid = '#' + programPaneId(i);
+// SKIP IN CSS         var pid  = '#' + programId(i);
+// SKIP IN CSS        //  $(ppid).height(ht); 
+// SKIP IN CSS       //  $(pid).height(ht-60);
+// SKIP IN CSS     }
+// SKIP IN CSS };
+// SKIP IN CSS 
+// SKIP IN CSS 
+// SKIP IN CSS // Resize Editor
+// SKIP IN CSS function toggleEditorSize(x){
+// SKIP IN CSS   var ht = 200;
+// SKIP IN CSS   if (x.isFullScreen){
+// SKIP IN CSS     ht = 300;
+// SKIP IN CSS   };
+// SKIP IN CSS   resizeProgEditorHeight(ht);
+// SKIP IN CSS }
 
 
 
