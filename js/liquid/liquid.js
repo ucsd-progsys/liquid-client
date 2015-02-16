@@ -27,6 +27,30 @@ for (var i = 0; i < numEditors; i++){
     progEditor[i] = pi; 
 }
 
+// lift `on` to work for collection of editors
+progEditor.on = function(event, fn){
+    for (var i = 0; i < numEditors; i++){
+        progEditor[i].on(event, fn);
+    }
+}
+
+// lift `setKeyboardHandler` to work for collection of editors
+progEditor.setKeyboardHandler = function(h){
+    for (var i = 0; i < numEditors; i++){
+        progEditor[i].setKeyboardHandler(h);
+    }
+}
+
+progEditor.getSourceCode = function (){
+    var srcs = progEditor.map(function (p){ return p.getSession().getValue();});
+    return  srcs.join("\n");
+}
+
+// function getSourceCode(){
+//   return progEditor.getSession().getValue();
+// }
+
+
 /*******************************************************************************/
 /** Markers For Errors *********************************************************/
 /*******************************************************************************/
@@ -104,7 +128,7 @@ function getSrcURL(file){
 
 function getCheckQuery($scope){ 
   return { type    : "check",
-           program : getSourceCode() 
+           program : progEditor.getSourceCode() 
          };
 }
 
@@ -113,7 +137,7 @@ function getRecheckQuery($scope){
   if ($scope.filePath) p = $scope.filePath;
 
   return { type    : "recheck", 
-           program : getSourceCode(), 
+           program : progEditor.getSourceCode(), 
            path    : p
          };
 }
@@ -126,14 +150,14 @@ function getLoadQuery($scope){
 
 function getSaveQuery($scope){
   return { type    : "save"
-         , program : getSourceCode()
+         , program : progEditor.getSourceCode()
          , path    : $scope.localFilePath
          };
 }
 
 function getPermaQuery($scope){
   return { type    : "perma"
-         , program : getSourceCode()
+         , program : progEditor.getSourceCode()
          };
 }
 
@@ -168,10 +192,6 @@ function setStatusResult($scope, data){
   $scope.isUnknown    = !($scope.isSafe || $scope.isError || $scope.isUnsafe || $scope.isCrash);
   $scope.filePath     = data.path;
   return result;
-}
-
-function getSourceCode(){
-  return progEditor.getSession().getValue();
 }
 
 /*******************************************************************************/
@@ -226,14 +246,16 @@ var debugZ      = null;
 function LiquidDemoCtrl($scope, $http, $location) {
 
   // Start in non-fullscreen
-  $scope.isFullScreen  = false; 
-  $scope.embiggen      = "FullScreen";
-  $scope.demoTitle     = demoTitle;
-  $scope.demoSubtitle  = demoSubtitle;
-  $scope.links         = allLinks;
-  $scope.categories    = getCategories();
-  $scope.isLocalServer = (document.location.hostname == "localhost");
-  $scope.localFilePath = "";
+  // NUKE $scope.isFullScreen  = false; 
+  // NUKE $scope.embiggen      = "FullScreen";
+  // NUKE $scope.demoTitle     = demoTitle;
+  // NUKE $scope.demoSubtitle  = demoSubtitle;
+  // NUKE $scope.links         = allLinks;
+  // NUKE $scope.categories    = getCategories();
+  // NUKE $scope.isLocalServer = (document.location.hostname == "localhost");
+  // NUKE $scope.localFilePath = "";
+
+  clearStatus($scope);
 
   // For debugging
   $scope.gong =  function(s) { alert(s); };
@@ -287,4 +309,4 @@ function LiquidDemoCtrl($scope, $http, $location) {
 
 var demo = angular.module("liquidDemo", []);
 demo.controller('LiquidDemoCtrl', LiquidDemoCtrl);
-toggleEditorSize({isFullScreen : false });
+// toggleEditorSize({isFullScreen : false });

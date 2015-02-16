@@ -44,11 +44,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <script type="text/javascript" src="../js/angular/angular.js"></script>
 <script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
 
-
-
 </head>
-
 <body data-spy="scroll" data-target=".bs-docs-sidebar" ng-app="liquidDemo" ng-controller="LiquidDemoCtrl">
+  
 <div id='page'>
 <h1 class="title">$title$</h1>
 $body$
@@ -89,9 +87,9 @@ And now, this is an <i class="glyphicon glyphicon-search"></i> icon.
 
 <!-- JavaScript below! ============================================== -->
 
-  <script src="../js/ace-new/ace.js" type="text/javascript" charset="utf-8"></script> 
-  <script src="../js/ace-new/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/ace-new/mode-haskell.js"  type="text/javascript" charset="utf-8"></script>
+  <script src="../js/ace/ace.js" type="text/javascript" charset="utf-8"></script> 
+  <script src="../js/ace/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/ace/mode-haskell.js"  type="text/javascript" charset="utf-8"></script>
   <script src="../js/liquid/tooltip.js"></script> 
   <script src="../js/liquid/annot.js"></script> 
   <script src="../js/liquid/config.js"></script> 

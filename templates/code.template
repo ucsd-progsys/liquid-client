@@ -1,4 +1,5 @@
 <div id="program-pane-$id" class="welleditor" style="background:#fff; position:relative">
+
   <!-- Verify Source -->
   <button class="btn btn-xs btn-link actbutton" type="button" style="z-index:1"
           ng-show="isUnknown" ng-click="verifySource()">
