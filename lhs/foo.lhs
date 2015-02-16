@@ -9,34 +9,6 @@ incr :: Int -> Int
 \end{code}
 </div>
 
-OK
-
-<button class="btn btn-xs btn-link" type="button" style="color:green; z-index:1">
-<span class="glyphicon glyphicon-ok"></span>
-</button>
-
-ERROR 
-
-<button class="btn btn-xs btn-link" type="button" style="color:red; z-index:1">
-<span class="glyphicon glyphicon-remove"></span>
-</button>
- 
-CRASH
-
-<button class="btn btn-xs btn-link" type="button" style="color:orange; z-index:1">
-<span class="glyphicon glyphicon-fire"></span>
-</button>
- 
-
-<button class="btn btn-link btn-success" type="button" style="color:blue">
-<span class="glyphicon glyphicon-search"></span>
-</button>
-
-
-This is an <i class="icon-play"></i> icon.
-
-And now, this is an <i class="glyphicon glyphicon-search"></i> icon.
-
 My personal favorite:
 
 \begin{code}

@@ -48,11 +48,44 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 </head>
 
-<body> 
+<body data-spy="scroll" data-target=".bs-docs-sidebar" ng-app="liquidDemo" ng-controller="LiquidDemoCtrl">
 <div id='page'>
 <h1 class="title">$title$</h1>
 $body$
 </div>
+
+<!-- 
+OK
+
+<button class="btn btn-xs btn-link" type="button" style="color:green; z-index:1">
+<span class="glyphicon glyphicon-ok"></span>
+</button>
+
+ERROR 
+
+<button class="btn btn-xs btn-link" type="button" style="color:red; z-index:1">
+<span class="glyphicon glyphicon-remove"></span>
+</button>
+ 
+CRASH
+
+<button class="btn btn-xs btn-link" type="button" style="color:orange; z-index:1">
+<span class="glyphicon glyphicon-fire"></span>
+</button>
+ 
+
+<button class="btn btn-link btn-success" type="button" style="color:blue">
+<span class="glyphicon glyphicon-search"></span>
+</button>
+
+
+This is an <i class="icon-play"></i> icon.
+
+And now, this is an <i class="glyphicon glyphicon-search"></i> icon.
+
+-->
+
+
 
 <!-- JavaScript below! ============================================== -->
 

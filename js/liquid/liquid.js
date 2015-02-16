@@ -27,44 +27,6 @@ for (var i = 0; i < numEditors; i++){
     progEditor[i] = pi; 
 }
 
-// SKIP IN CSS function resizeProgEditorWidth() {
-// SKIP IN CSS     for (var i = 0; i < numEditors; i++){
-// SKIP IN CSS         var ppid = '#' + programPaneId(i);
-// SKIP IN CSS         var pid  = '#' + programId(i);
-// SKIP IN CSS         var w = $(ppid).width();
-// SKIP IN CSS         // SKIP the next thing, done in CSS
-// SKIP IN CSS         // $(pid).width(w);
-// SKIP IN CSS     }
-// SKIP IN CSS };
-
-
-//listen for changes
-// SKIP IN CSS $(window).resize(resizeProgEditorWidth);
-
-//set initially
-// SKIP IN CSS resizeProgEditorWidth();
-
-// SKIP IN CSS function resizeProgEditorHeight(ht) {
-// SKIP IN CSS     for (var i = 0; i < numEditors; i++){
-// SKIP IN CSS         var ppid = '#' + programPaneId(i);
-// SKIP IN CSS         var pid  = '#' + programId(i);
-// SKIP IN CSS        //  $(ppid).height(ht); 
-// SKIP IN CSS       //  $(pid).height(ht-60);
-// SKIP IN CSS     }
-// SKIP IN CSS };
-// SKIP IN CSS 
-// SKIP IN CSS 
-// SKIP IN CSS // Resize Editor
-// SKIP IN CSS function toggleEditorSize(x){
-// SKIP IN CSS   var ht = 200;
-// SKIP IN CSS   if (x.isFullScreen){
-// SKIP IN CSS     ht = 300;
-// SKIP IN CSS   };
-// SKIP IN CSS   resizeProgEditorHeight(ht);
-// SKIP IN CSS }
-
-
-
 /*******************************************************************************/
 /** Markers For Errors *********************************************************/
 /*******************************************************************************/
@@ -208,13 +170,6 @@ function setStatusResult($scope, data){
   return result;
 }
 
-function setSourceCode($scope, srcName, srcText){
-  clearStatus($scope);
-  $scope.filePath       = null;             
-  $scope.sourceFileName = srcName.split("/").pop(); // drop path prefix
-  progEditor.getSession().setValue(srcText);  
-}
-
 function getSourceCode(){
   return progEditor.getSession().getValue();
 }
@@ -232,22 +187,6 @@ function fileText(file, k){
   });
   reader.readAsText(file);
 }
-
-/*@ loadSourceFile :: (scope, file) => void */
-function loadLocalFile($scope, file){
-  if (window.File && window.FileList && window.FileReader && file) {
-    if (file.type.match('text')) {
-      fileText(file, function(srcText){ 
-        setSourceCode($scope, file.name, srcText); 
-      });
-    } else { 
-      alert("Can only load text files.");
-    }
-  } else {
-    alert("Cannot load files: browser does not support File API");
-  }
-}
-
 
 /*******************************************************************************/
 /** Extracting JSON Results ****************************************************/
@@ -299,118 +238,18 @@ function LiquidDemoCtrl($scope, $http, $location) {
   // For debugging
   $scope.gong =  function(s) { alert(s); };
 
-  // Toggle fullScreen mode
-  $scope.toggleFullScreen  = function(){
-    $scope.isFullScreen = !$scope.isFullScreen;
-    $scope.embiggen     = ($scope.embiggen == "FullScreen") ? "Shrink" : "FullScreen";
-    toggleEditorSize($scope);
-  };
-
-  // LOAD a file from disk (only when isLocalServer)
-  $scope.loadFromLocalPath = function(){ 
-    var srcName = $scope.localFilePath;
-    if (srcName){
-      // alert('so you want to load' + $scope.localFilePath); 
-      $http.post(getQueryURL(), getLoadQuery($scope))
-           .success(function(data, status){
-             debugData = data;
-             if (data.program) { 
-               setSourceCode($scope, srcName, data.program);
-             } else if (data.error) {
-               alert("Load Error " + data.error); 
-             } else {
-               alert("Horrors: Load Failed! " + srcName); 
-             }
-           })
-           .error(function(data, status){
-             alert("Load Error: No response for " + srcName); 
-           });
-    }
-  };
-
-  // SAVE a file to disk (only when isLocalServer)
-  $scope.saveToLocalPath = function(){ 
-    var srcName = $scope.localFilePath;
-    //alert('so you want to save ' + $scope.localFilePath); 
-    if (srcName) {
-      $http.post(getQueryURL(), getSaveQuery($scope))
-           .success(function(data, status){
-             debugData = data;
-             if (data.path){
-               alert("Saved."); 
-             } else {
-               alert("Save Unsuccessful: " + data);
-             }
-           })
-           .error(function(data, status){
-             alert("Save Failed: " + data); 
-           });
-    }
-  };
-
   // Clear Status when editor is changed
   progEditor.on("change", function(e){ 
     $scope.$apply(function(){
       clearStatus($scope);
     });
   });
-  
-
-  // Load a particular demo
-  $scope.loadSource   = function(demo){
-    debugDemo   = demo;
-    var srcName = demo.file;
-    var srcURL  = getSrcURL(srcName);
-    debugSrcURL = srcURL;
-    $http.get(srcURL)
-         .success(function(srcText) { setSourceCode($scope, srcName, srcText); })
-         .error(function(data, stat){ alert("Horrors: No such file! " + srcURL); })
-         ;
-  };
-
-  // Initialize with Test000.hs
-  debugDemo = getDefaultDemo();
-  $scope.loadSource(debugDemo); //getDefaultDemo());
-
-  // Extract demo name from URL 
-  $scope.$watch('location.search()', function() {
-    // debugZ  = ($location.search()).demo;
-    $scope.demoName = ($location.search()).demo;
-    var newDemo = {file : $scope.demoName};
-    if ($scope.demoName in allDemos){
-      newDemo = getDemo($scope.demoName);
-    }
-    $scope.loadSource(newDemo);
-    }, true);
-
-  // Update demo name in URL 
-  $scope.changeTarget = function(demo) {
-     $location.search('demo', demo.file);
-     $scope.loadSource(demo);
-  };
  
   // Change editor keybindings
   $scope.keyBindingsNone  = function (){ progEditor.setKeyboardHandler(null); };
   $scope.keyBindingsVim   = function (){ progEditor.setKeyboardHandler("ace/keyboard/vim"); };
   $scope.keyBindingsEmacs = function (){ progEditor.setKeyboardHandler("ace/keyboard/emacs"); };
-
-  // PERMALINK
-  $scope.makePermalink = function(){
-    $http.post(getQueryURL(), getPermaQuery($scope))
-         .success(function(data, status){
-           if (data.path){
-             debugData        = data;
-             $scope.changeTarget({file : data.path});
-           } else {
-             alert("Permalink did not return link: " + data); 
-           }
-         })
-         .error(function(data, status){
-            alert("Permalink Failed: " + status); 
-         });
-  };
-
-
+  
   // http://www.cleverweb.nl/javascript/a-simple-search-with-angularjs-and-php/
   function verifyQuery(query){ 
     debugQuery = query;
@@ -438,8 +277,8 @@ function LiquidDemoCtrl($scope, $http, $location) {
   };
   
   $scope.verifySource   = function(){ verifyQuery(getCheckQuery($scope));   };
-  $scope.reVerifySource = function(){ verifyQuery(getRecheckQuery($scope)); };
-   
+
+  // $scope.reVerifySource = function(){ verifyQuery(getRecheckQuery($scope)); };
 }
 
 /************************************************************************/

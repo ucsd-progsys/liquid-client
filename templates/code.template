@@ -1,21 +1,40 @@
 <div id="program-pane-$id" class="welleditor" style="background:#fff; position:relative">
-  <!--
-  <div class="form-horizontal">
-    <button class="btn btn-info" type="button" ng-show="isUnknown" ng-click="verifySource()">Check</button>
-    <button class="btn"             type="button" ng-show="isChecking" ng-click="verifySource()">Verifying...</button>
-    <button class="btn btn-success" type="button" ng-show="isSafe">Safe</button>
-    <button class="btn btn-danger"  type="button" ng-show="isUnsafe">Unsafe</button>
-    <button class="btn btn-warning" type="button" ng-show="isError">Error!</button>
-    <button class="btn btn-warning" type="button" ng-show="isCrash">Crash!</button>
-    <div style="float:right" class="input-prepend input-append">
-       <button class="btn" type="button" ng-click="makePermalink()">Permalink: {{sourceFileName}}</button>
-       <button class="btn" type="button" ng-click="toggleFullScreen()">{{embiggen}}</i></button>
-    </div>
-  </div> 
-  <br>
-  -->
-  <button class="btn btn-xs btn-link actbutton" type="button" style="color:blue; z-index:1">
+  <!-- Verify Source -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="z-index:1"
+          ng-show="isUnknown" ng-click="verifySource()">
     <span class="glyphicon glyphicon-play"></span>
   </button>
+
+  <!-- Verifying ... -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="z-index:1"
+          ng-show="isChecking" ng-click="verifySource()">
+    <span class="glyphicon glyphicon-hourglass"></span>
+  </button>
+ 
+  <!-- Safe -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="color:green; z-index:1"
+          ng-show="isSafe">
+    <span class="glyphicon glyphicon-ok"></span>
+  </button>
+
+
+  <!-- Unsafe -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="color:red; z-index:1"
+          ng-show="isUnsafe">
+    <span class="glyphicon glyphicon-remove"></span>
+  </button>
+
+  <!-- Error -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="color:orange; z-index:1"
+          ng-show="isError">
+    <span class="glyphicon glyphicon-fire"></span>
+  </button>
+
+  <!-- Error -->
+  <button class="btn btn-xs btn-link actbutton" type="button" style="color:orange; z-index:1"
+          ng-show="isCrash">
+    <span class="glyphicon glyphicon-exclamation-sign"></span>
+  </button>
+
   <div id="program-$id" class="programbox">$code</div>
 </div>
