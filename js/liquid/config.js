@@ -22,7 +22,8 @@ var toolName       = "liquidhaskell";
 var editorTheme    = "ace/theme/xcode";
 var editorMode     = "ace/mode/haskell";
 var defaultErrText = "Liquid Type Error";
- 
+var queryServerURL = "http://localhost:8090/" 
+
 /************** List of Demos **************************************************/
 
 var allCategories = [ { type : "basic"    , name: "Basics" }

@@ -109,7 +109,7 @@ function isPrefix(p, q) {
 }
 
 function getQueryURL(){ 
-  return 'query'; 
+  return queryServerURL + 'query'; 
 }
 
 function getSrcURL(file){ 

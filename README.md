@@ -17,4 +17,6 @@ Client side web pages with text-panes that interact with liquid-server
 4. on result updates error gutter.
 5. on result updates type annots.
 
-
+- `progEditor.getSession().getValue();`
++ `setAnnots(data.types)`
++ `setErrors(progEditor, data.errors)`
