@@ -37,6 +37,9 @@ var annotTable
            } 
      }
 
+/*@ codeBlocks :: array[number] */
+var codeBlocks = [];
+
 /********************************************************************************/
 /******** Function Returning Annot for A Row/Column *****************************/
 /********************************************************************************/
@@ -60,21 +63,48 @@ function getAnnotText(row, col, annT) {
   return null;
 }
 
+/*@ getRealRow :: (int, int, array[int]) => int */
+function getRealRow(i, row, codeS){
+    alert("HEREHEREHEREHEREHERE");
+}
+
+function getAnnotTextBlock(i, row, col, annT, codeS){
+    var realRow = computeRow(i, row, codeS);
+    return getAnnotText(realRow, col, annT);
+}
+
 
 /******************************************************************/
 /****** PUBLIC API ************************************************/
 /******************************************************************/
 
-/*@ annotFun :: (int, int) => string? */
-function getAnnot(row, col){
-  var r = getAnnotText(row + 1, col + 1, annotTable);
-  if (r) { curAnnot = r;}
-  return r;
+// /*@ getAnnot :: (int, int) => string? */
+// function getAnnot(row, col){
+//   var r = getAnnotText(row + 1, col + 1, annotTable);
+//   if (r) { curAnnot = r;}
+//   return r;
+// }
+
+/*@ getAnnotBlock :: (int) => ((int, int) => string?) */
+function getAnnotBlock(i){
+    var get = function(row, col){
+        var r = getAnnotTextBlock(i, row + 1, col + 1, annotTable, codeBlocks);
+        if (r) { curAnnot = r;}
+        return r;
+    }
+    return get;
 }
 
-/*@ setAnnots :: (Annot) => void */
-function setAnnots(t) {
-  annotTable = t;
+
+/*@ numLines :: (string) => int */
+function numLines(str){
+    return str.split("\n").length;
+}
+
+/*@ setAnnots :: (array[string], Annot) => void */
+function setAnnots(blocks, t) {
+    annotTable = t;
+    codeBlocks = blocks.map(function(str){ return numLines(str);});
 }
 
 

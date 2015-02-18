@@ -4,9 +4,10 @@
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
 
-var SrcMode    = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
-var numEditors = $('.welleditor').length;
-var progEditor = [];
+var SrcMode     = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
+var numEditors  = $('.welleditor').length;
+var progEditor  = [];
+var typeTooltip = [];
 
 function programId(i)     { return "program-"      + i; }
 function programPaneId(i) { return "program-pane-" + i; }
@@ -23,8 +24,8 @@ for (var i = 0; i < numEditors; i++){
         fontSize: "13pt"
     });
     pi.getSession().setMode(new SrcMode());
-    var typeTooltip = new TokenTooltip(pi, getAnnot);
-    progEditor[i] = pi; 
+    typeTooltip[i] = new TokenTooltip(pi, getAnnotBlock(i));
+    progEditor[i]  = pi; 
 }
 
 // lift `on` to work for collection of editors
@@ -41,15 +42,13 @@ progEditor.setKeyboardHandler = function(h){
     }
 }
 
-progEditor.getSourceCode = function (){
-    var srcs = progEditor.map(function (p){ return p.getSession().getValue();});
-    return  srcs.join("\n");
+progEditor.getSourceBlocks = function (){
+    return progEditor.map(function (p){ return p.getSession().getValue();});
 }
 
-// function getSourceCode(){
-//   return progEditor.getSession().getValue();
-// }
-
+progEditor.getSourceCode = function (){
+    return progEditor.getSourceBlocks().join("\n");
+}
 
 /*******************************************************************************/
 /** Markers For Errors *********************************************************/
@@ -287,8 +286,10 @@ function LiquidDemoCtrl($scope, $http, $location) {
            
             // This may be "null" if liquid crashed...
             if (data) { 
-              setAnnots(data.types);
-              setErrors(progEditor, data.errors);
+                setAnnots(progEditor.getSourceBlocks(), data.types);
+
+              // TODO
+              // setErrors(progEditor, data.errors);
             };
             
         })
