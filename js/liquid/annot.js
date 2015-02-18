@@ -64,12 +64,16 @@ function getAnnotText(row, col, annT) {
 }
 
 /*@ getRealRow :: (int, int, array[int]) => int */
-function getRealRow(i, row, codeS){
-    alert("HEREHEREHEREHEREHERE");
+function getRealRow(block, row, codeS){
+    var off = row;
+    for(var i = 0; i < block; i++){
+        off += codeS[i];
+    }
+    return off;
 }
 
 function getAnnotTextBlock(i, row, col, annT, codeS){
-    var realRow = computeRow(i, row, codeS);
+    var realRow = getRealRow(i, row, codeS);
     return getAnnotText(realRow, col, annT);
 }
 
