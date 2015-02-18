@@ -1,6 +1,10 @@
 
 'use strict';
 
+/*@ numLines :: (string) => int */
+function numLines(str){
+    return str.split("\n").length;
+}
 /********************************************************************************/
 /******** "Global" Annotation Table *********************************************/
 /********************************************************************************/
@@ -82,27 +86,23 @@ function getAnnotTextBlock(i, row, col, annT, codeS){
 /****** PUBLIC API ************************************************/
 /******************************************************************/
 
-// /*@ getAnnot :: (int, int) => string? */
-// function getAnnot(row, col){
-//   var r = getAnnotText(row + 1, col + 1, annotTable);
-//   if (r) { curAnnot = r;}
-//   return r;
-// }
+/*@ getBlockRow :: (int) => {block: int; row: int} */
+function getBlockRow(row){
+    return TODOTODOTODOHEREHERE();
+}
 
-/*@ getAnnotBlock :: (int) => ((int, int) => string?) */
-function getAnnotBlock(i){
+/*@ getAnnot :: (int) => ((int, int) => string?) */
+function getAnnot(i){
     var get = function(row, col){
-        var r = getAnnotTextBlock(i, row + 1, col + 1, annotTable, codeBlocks);
+        var r = getAnnotTextBlock(i,
+                                  row + 1,
+                                  col + 1,
+                                  annotTable,
+                                  codeBlocks);
         if (r) { curAnnot = r;}
         return r;
     }
     return get;
-}
-
-
-/*@ numLines :: (string) => int */
-function numLines(str){
-    return str.split("\n").length;
 }
 
 /*@ setAnnots :: (array[string], Annot) => void */

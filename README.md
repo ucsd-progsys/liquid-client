@@ -11,12 +11,12 @@ Client side web pages with text-panes that interact with liquid-server
 
 ### PLAY
 
-1. gathers code, (displays as alert)
-2. sends to server,
-3. on result updates icons.
-4. on result updates error gutter.
-5. on result updates type annots.
++ gathers code, (displays as alert)
++ sends to server,
++ on result updates icons,
++ on result updates type annots,
+- on result updates error gutter.
 
-- `progEditor.getSession().getValue();`
++ `progEditor.getSession().getValue();`
 + `setAnnots(data.types)`
-+ `setErrors(progEditor, data.errors)`
+- `setErrors(progEditor, data.errors)`

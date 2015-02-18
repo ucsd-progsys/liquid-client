@@ -1,5 +1,22 @@
 'use strict';
 
+function replicate(n, x) {
+    var a = [];
+    for (var i = 0; i < n; i++){
+        a.push(x);
+    }
+    return a;
+}
+
+function replicatei(n, f) {
+    var a = [];
+    for (var i = 0; i < n; i++){
+        a.push(f(i));
+    }
+    return a;
+}
+
+
 /*******************************************************************************/
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
@@ -24,7 +41,7 @@ for (var i = 0; i < numEditors; i++){
         fontSize: "13pt"
     });
     pi.getSession().setMode(new SrcMode());
-    typeTooltip[i] = new TokenTooltip(pi, getAnnotBlock(i));
+    typeTooltip[i] = new TokenTooltip(pi, getAnnot(i));
     progEditor[i]  = pi; 
 }
 
@@ -50,6 +67,10 @@ progEditor.getSourceCode = function (){
     return progEditor.getSourceBlocks().join("\n");
 }
 
+// Globals
+var progEditor.errorMarkers = replicate(numEditors, []); 
+
+
 /*******************************************************************************/
 /** Markers For Errors *********************************************************/
 /*******************************************************************************/
@@ -74,30 +95,36 @@ function errorMarker(editor, err){
 }
 
 function errorAceAnnot(err){
-  var etext = defaultErrText;
-  if (err.message) { etext = err.message; }
-  var ann = { row   : err.start.line - 1
-            , column: err.start.column
-            , text  : etext
-            , type  : "error"
-            };
-  return ann;
+    var etext = defaultErrText;
+    if (err.message) {
+        etext = err.message;
+    }
+    var ann = { row   : err.start.line - 1
+              , column: err.start.column
+              , text  : etext
+              , type  : "error"
+              };
+    return ann;
 }
 
-// Globals
-var errorMarkers = [];
-
-function setErrors(editor, errs){
-  // Add Error Markers
-  errorMarkers.forEach(function(m){ editor.session.removeMarker(m); });
-  errorMarkers = errs.map(function(e){ return errorMarker(editor, e);});
+function setErrorsOne(i, errs){
+    var editor = progEditor[i];
+    // Add Error Markers
+    progEditor.errorMarkers[i].forEach(function(m){ editor.session.removeMarker(m); });
+    progEditor.errorMarkers[i] = errs.map(function(e){ return errorMarker(editor, e);});
   
-  // Add Gutter Annotations
-  editor.session.clearAnnotations();
-  var annotations  = errs.map(errorAceAnnot);
-  editor.session.setAnnotations(annotations);
+    // Add Gutter Annotations
+    editor.session.clearAnnotations();
+    var annotations  = errs.map(errorAceAnnot);
+    editor.session.setAnnotations(annotations);
 }
 
+function setErrors(errs){
+    for (var i = 0; i < numEditors; i++){
+        var errsi = TODOTODO();
+        setErrorsOne(i, errsi);
+    } 
+}
 
 /*******************************************************************************/
 /************** URLS ***********************************************************/
@@ -289,7 +316,7 @@ function LiquidDemoCtrl($scope, $http, $location) {
                 setAnnots(progEditor.getSourceBlocks(), data.types);
 
               // TODO
-              // setErrors(progEditor, data.errors);
+              setErrors(data.errors);
             };
             
         })
