@@ -86,11 +86,6 @@ function getAnnotTextBlock(i, row, col, annT, codeS){
 /****** PUBLIC API ************************************************/
 /******************************************************************/
 
-/*@ getBlockRow :: (int) => {block: int; row: int} */
-function getBlockRow(row){
-    return TODOTODOTODOHEREHERE();
-}
-
 /*@ getAnnot :: (int) => ((int, int) => string?) */
 function getAnnot(i){
     var get = function(row, col){
@@ -105,10 +100,10 @@ function getAnnot(i){
     return get;
 }
 
-/*@ setAnnots :: (array[string], Annot) => void */
+/*@ setAnnots :: (array[number], Annot) => void */
 function setAnnots(blocks, t) {
+    codeBlocks = blocks;
     annotTable = t;
-    codeBlocks = blocks.map(function(str){ return numLines(str);});
 }
 
 

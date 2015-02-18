@@ -119,7 +119,8 @@ function setErrorsOne(i, errs){
     editor.session.setAnnotations(annotations);
 }
 
-function setErrors(errs){
+/*@ setErrors :: (array[int], array[error]) => void */
+function setErrors(blocks, errs){
     for (var i = 0; i < numEditors; i++){
         var errsi = TODOTODO();
         setErrorsOne(i, errsi);
@@ -313,10 +314,10 @@ function LiquidDemoCtrl($scope, $http, $location) {
            
             // This may be "null" if liquid crashed...
             if (data) { 
-                setAnnots(progEditor.getSourceBlocks(), data.types);
-
-              // TODO
-              setErrors(data.errors);
+                var blocks = progEditor.getSourceBlocks()
+                                       .map(function(str){ return numLines(str); });
+                setAnnots(blocks, data.types);
+                setErrors(blocks, data.errors);
             };
             
         })
