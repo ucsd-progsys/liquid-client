@@ -40,7 +40,7 @@ function programPaneId(i) { return "program-pane-" + i; }
 // Create Editors
 for (var i = 0; i < numEditors; i++){
     var pi = ace.edit(programId(i));
-    pi.renderer.setShowGutter(false)
+    // pi.renderer.setShowGutter(false)
     pi.setShowPrintMargin(false);
     pi.setOptions({ maxLines: Infinity});
     pi.setTheme(editorTheme);    // progEditor.setTheme("ace/theme/xcode");
@@ -76,7 +76,7 @@ progEditor.getSourceCode = function (){
 }
 
 // Globals
-var progEditor.errorMarkers = replicate(numEditors, []); 
+progEditor.errorMarkers = replicate(numEditors, []); 
 
 
 /*******************************************************************************/
@@ -115,7 +115,7 @@ function errorAceAnnot(err){
     return ann;
 }
 
-function setErrorsOne(i, errs){
+function setBlockErrors(i, errs){
     var editor = progEditor[i];
     // Add Error Markers
     progEditor.errorMarkers[i].forEach(function(m){ editor.session.removeMarker(m); });
@@ -152,9 +152,9 @@ function shiftPos(pos, off){
 }
 
 /*@ shiftError :: (error, off) => error */
-function shiftError(err, off){
-    return { start : shiftPos(err.start, off),
-             stop  : shiftPos(error.stop, off)
+function shiftError(e, off){
+    return { start : shiftPos(e.start, off),
+             stop  : shiftPos(e.stop , off)
            }; 
 }
 
@@ -163,7 +163,7 @@ function errorBlock(ends, err){
     var l = err.start.line;
     var i = 0;
     while (i < ends.length){
-        if (l < ends[i])
+        if (l <= ends[i])
             break;
         i++;
     }
@@ -174,6 +174,7 @@ function errorBlock(ends, err){
 /*@ blockErrors :: (array[int], array[error]) => array[array[error]] */
 function blockErrors(blocks, errs){
     var ends  = blockEnds(blocks);
+    debugZ    = ends;
     var res   = blocks.map(function(){return []});
     errs.forEach(function(err){
         var eb = errorBlock(ends, err);
@@ -184,9 +185,10 @@ function blockErrors(blocks, errs){
 
 /*@ setErrors :: (array[int], array[error]) => void */
 function setErrors(blocks, errs){
-    var errors = blockErrors(blocks, errs);
+    var errors  = blockErrors(blocks, errs);
+    debugErrors = errors;
     for (var i = 0; i < numEditors; i++){
-        setErrorsOne(i, errors[i]);
+        setBlockErrors(i, errors[i]);
     } 
 }
 
@@ -324,6 +326,7 @@ function getWarns(d){
 /************** Top-Level Demo Controller **************************************/
 /*******************************************************************************/
 
+var debugErrors = null;
 var debugQuery  = null;
 var debugData   = null;
 var debugResult = null;
@@ -379,6 +382,7 @@ function LiquidDemoCtrl($scope, $http, $location) {
             if (data) { 
                 var blocks = progEditor.getSourceBlocks()
                                        .map(function(str){ return numLines(str); });
+
                 setAnnots(blocks, data.types);
                 setErrors(blocks, data.errors);
             };

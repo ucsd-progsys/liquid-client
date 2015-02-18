@@ -4,6 +4,9 @@ title: This is my thing
 
 <div class="hidden">
 \begin{code}
+{-@ LIQUID "--short-names" @-}
+module Foo where
+
 fib  :: Int -> Int
 incr :: Int -> Int
 \end{code}

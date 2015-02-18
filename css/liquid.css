@@ -54,7 +54,9 @@ a.annot:hover {
   background-color: #D8D8D8;
 }
 
-a.annot span.annottext{display: none}
+a.annot span.annottext {
+    display: none
+}
 
 a.annot:hover span.annottext{ 
   

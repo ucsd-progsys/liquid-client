@@ -26,7 +26,7 @@ box-shadow: 0 0 3px 0px #FFFFFF;\
 border-radius: 2px\
 }\
 .ace-xcode .ace_marker-layer .ace_step {\
-background: rgb(198, 219, 174)\
+background: rgba(255, 0, 0, 0.271)\
 }\
 .ace-xcode .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
