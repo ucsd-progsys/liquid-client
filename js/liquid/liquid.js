@@ -32,7 +32,7 @@ function replicatei(n, f) {
 var SrcMode     = require(editorMode).Mode; // var SrcMode     = require("ace/mode/haskell").Mode;
 var numEditors  = $('.welleditor').length;
 var progEditor  = [];
-var typeTooltip = [];
+progEditor.typeTooltip = [];
 
 function programId(i)     { return "program-"      + i; }
 function programPaneId(i) { return "program-pane-" + i; }
@@ -40,7 +40,10 @@ function programPaneId(i) { return "program-pane-" + i; }
 // Create Editors
 for (var i = 0; i < numEditors; i++){
     var pi = ace.edit(programId(i));
-    // pi.renderer.setShowGutter(false)
+    
+    pi.renderer.setShowGutter(true);        // keep gutter for error-message hook
+    pi.setOption("showLineNumbers", false); // hide line numbers 
+
     pi.setShowPrintMargin(false);
     pi.setOptions({ maxLines: Infinity});
     pi.setTheme(editorTheme);    // progEditor.setTheme("ace/theme/xcode");
@@ -49,8 +52,8 @@ for (var i = 0; i < numEditors; i++){
         fontSize: "13pt"
     });
     pi.getSession().setMode(new SrcMode());
-    typeTooltip[i] = new TokenTooltip(pi, getAnnot(i));
     progEditor[i]  = pi; 
+    progEditor.typeTooltip[i] = new TokenTooltip(pi, getAnnot(i));
 }
 
 // lift `on` to work for collection of editors
@@ -153,8 +156,9 @@ function shiftPos(pos, off){
 
 /*@ shiftError :: (error, off) => error */
 function shiftError(e, off){
-    return { start : shiftPos(e.start, off),
-             stop  : shiftPos(e.stop , off)
+    return { start   : shiftPos(e.start, off),
+             stop    : shiftPos(e.stop , off),
+             message : e.message 
            }; 
 }
 
@@ -174,7 +178,6 @@ function errorBlock(ends, err){
 /*@ blockErrors :: (array[int], array[error]) => array[array[error]] */
 function blockErrors(blocks, errs){
     var ends  = blockEnds(blocks);
-    debugZ    = ends;
     var res   = blocks.map(function(){return []});
     errs.forEach(function(err){
         var eb = errorBlock(ends, err);
