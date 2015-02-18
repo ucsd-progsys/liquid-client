@@ -1,5 +1,13 @@
 'use strict';
 
+function compare(x, y){
+    if (x < y)
+        return -1;
+    if (x > y)
+        return 1;
+    return 0;
+}
+
 function replicate(n, x) {
     var a = [];
     for (var i = 0; i < n; i++){
@@ -119,11 +127,66 @@ function setErrorsOne(i, errs){
     editor.session.setAnnotations(annotations);
 }
 
+function compareErr(e1, e2){
+    return compare(e1.start.line, e2.start.line);
+}
+
+/*@ blockEnds :: (array[int]) => array[int] */
+function blockEnds(blocks) {
+    var n    = blocks.length;
+    var ends = new Array(n);
+    var off  = 0;
+    for (var i = 0; i < blocks.length; i++){
+        ends[i] = off + blocks[i];
+        off     = ends[i];
+    }
+    return ends;
+}
+
+
+/*@ shiftPos :: (pos, off) => pos */
+function shiftPos(pos, off){
+    return { line   : pos.line - off,
+             column : pos.column
+           };  
+}
+
+/*@ shiftError :: (error, off) => error */
+function shiftError(err, off){
+    return { start : shiftPos(err.start, off),
+             stop  : shiftPos(error.stop, off)
+           }; 
+}
+
+/*@ errorBlock :: (array[int], error) => {block:int, error: error} */
+function errorBlock(ends, err){
+    var l = err.start.line;
+    var i = 0;
+    while (i < ends.length){
+        if (l < ends[i])
+            break;
+        i++;
+    }
+    var off  = (0 < i) ? ends[i-1] : 0;
+    return {block: i, error: shiftError(err, off)};
+}
+
+/*@ blockErrors :: (array[int], array[error]) => array[array[error]] */
+function blockErrors(blocks, errs){
+    var ends  = blockEnds(blocks);
+    var res   = blocks.map(function(){return []});
+    errs.forEach(function(err){
+        var eb = errorBlock(ends, err);
+        res[eb.block].push(eb.error);
+    });
+    return res;
+}
+
 /*@ setErrors :: (array[int], array[error]) => void */
 function setErrors(blocks, errs){
+    var errors = blockErrors(blocks, errs);
     for (var i = 0; i < numEditors; i++){
-        var errsi = TODOTODO();
-        setErrorsOne(i, errsi);
+        setErrorsOne(i, errors[i]);
     } 
 }
 
