@@ -12,7 +12,9 @@ import Text.Pandoc
 -- import Data.Monoid (mempty)
 import Debug.Trace
 import Text.Printf (printf)
-
+import System.Directory
+import System.IO
+  
 import qualified Data.ByteString.Lazy as S
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as L
@@ -22,7 +24,7 @@ import Data.Text.Template
 
 main :: IO ()
 main = do r    <- newIORef 0
-          tplt <- TIO.readFile "templates/code.template"
+          tplt <- TIO.readFile "web/templates/code.template"
           toJSONFilter (txBlock tplt r)
           
 txBlock :: T.Text -> IORef Int -> Block -> IO Block

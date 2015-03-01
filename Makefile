@@ -5,6 +5,7 @@ PANDOC=pandoc \
 	   --standalone \
 	   --mathjax \
 	   --section-divs \
+     --metadata=assets:.. \
 		 --filter templates/codeblock.hs \
      --highlight-style=tango\
      --template=templates/page.template
