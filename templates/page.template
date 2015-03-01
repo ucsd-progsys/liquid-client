@@ -6,8 +6,8 @@
     <meta name="generator" content="rustdoc">
     <title>$title$</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
 
     <!--
     <link href="../css/bootswatch.css" rel="stylesheet">
@@ -42,7 +42,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <!-- <script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script> -->
 <script type="text/javascript" src="../js/jquery/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../js/angular/angular.js"></script>
-<script type="text/javascript" src="../js/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap/bootstrap.js"></script>
 
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" ng-app="liquidDemo" ng-controller="LiquidDemoCtrl">
