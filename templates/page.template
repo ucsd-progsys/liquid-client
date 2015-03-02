@@ -42,7 +42,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <body data-spy="scroll" data-target=".bs-docs-sidebar" ng-app="liquidDemo" ng-controller="LiquidDemoCtrl">
   
 <div id='page'>
+ 
+$if(notitle)$
+
+$else$
 <h1 class="title">$title$</h1>
+$endif$
 $body$
 </div>
 

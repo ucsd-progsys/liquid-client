@@ -33,9 +33,6 @@ txBlock t r (CodeBlock (id, classes, namevals) contents)
   = do n <- getCount r
        let contents' = pad t n contents 
        return $ RawBlock (Format "html") contents'
-       -- CodeBlock (id, classes, namevals) contents'
-       
-    where
 
 txBlock _ _ z
   = return z -- $ trace ("block:" ++ show z) z
