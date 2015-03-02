@@ -1,4 +1,4 @@
-<div id="program-pane-$id" class="welleditor" style="background:#fff; position:relative">
+<div id="program-pane-$id" class="welleditor $hide" style="background:#fff; position:relative">
 
   <!-- Verify Source -->
   <button class="btn btn-xs btn-link actbutton" type="button" style="z-index:1"

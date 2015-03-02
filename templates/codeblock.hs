@@ -8,7 +8,7 @@ import Data.IORef
 import Text.Pandoc.JSON
 import Text.Pandoc
 -- import Data.Char (isSpace)
--- import Data.List
+import Data.List (isSuffixOf, isPrefixOf)
 -- import Data.Monoid (mempty)
 import Debug.Trace
 import Text.Printf (printf)
@@ -30,30 +30,64 @@ main = do r    <- newIORef 0
 txBlock :: T.Text -> IORef Int -> Block -> IO Block
 txBlock t r (CodeBlock (id, classes, namevals) contents)
   | isCode classes
-  = do n <- getCount r
-       let contents' = pad t n contents 
-       return $ RawBlock (Format "html") contents'
+  = makeCodeBlock t r True contents 
+  -- = do n <- getCount r
+  --      let contents' = pad t n contents False 
+  --      return $ RawBlock (Format "html") contents'
 
+txBlock t r b@(RawBlock (Format "latex") str)
+  = maybe (return b) (makeCodeBlock t r False) (isCommentCode str)
+        
+  -- = do n <- getCount r
+  --      let contents  = trimLines 2 str  
+  --      let contents' = pad t n contents True
+  --      return $ RawBlock (Format "html") contents'
+       
 txBlock _ _ z
   = return z -- $ trace ("block:" ++ show z) z
 
-isCode  = ("haskell" `elem`)
+isCode             = ("haskell" `elem`)
 
+isCommentCode str
+  = do str'  <- stripPrefix commentPrefix str
+       str'' <- stripSuffix commentSuffix str'
+       return str''
+    where
+       commentPrefix = "\\begin{comment}\n\\begin{code}\n"
+       commentSuffix = "\\end{code}\n\\end{comment}"
 
+stripSuffix p s
+  | isSuffixOf p s = Just $ take (length s - length p) s
+  | otherwise      = Nothing
+  
+stripPrefix p s
+  | isPrefixOf p s = Just $ drop (length p) s
+  | otherwise      = Nothing
+                                   
+       
 getCount r = do n <- readIORef r
                 writeIORef r (n+1)
                 return n
 
-pad :: T.Text -> Int -> String -> String                
-pad tplt n s   = L.unpack $ substitute tplt ctx 
+makeCodeBlock :: T.Text -> IORef Int -> Bool -> String -> IO Block 
+makeCodeBlock t r hide contents 
+  = do n <- getCount r 
+       let contents' = pad t n hide contents 
+       return $ RawBlock (Format "html") contents'
+
+pad :: T.Text -> Int -> Bool -> String -> String                
+pad tplt n h s = L.unpack $ substitute tplt ctx 
   where
     tn         = T.pack $ show n 
     ts         = T.pack $ prefix ++ s
-    prefix     = "" -- """-- block: " ++ show n ++ "\n"
+    tb True    = T.pack "hidden"
+    tb False   = T.pack ""
+    prefix     = ""
 
     ctx        :: T.Text -> T.Text 
     ctx "code" = ts 
     ctx "id"   = tn 
+    ctx "hide" = tb h
     ctx z      = z
 
 
