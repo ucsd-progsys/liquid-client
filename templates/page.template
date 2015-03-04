@@ -8,6 +8,11 @@
 
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
+
+    <!--
+    <link href="../css/bootswatch.css" rel="stylesheet">
+    -->
+
     <link rel="stylesheet" type="text/css" href="../css/rust-book.css">
     <link rel="stylesheet" type="text/css" href="../css/editor.css">
 
@@ -33,22 +38,17 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 
 
+<!-- <link href="syntax/liquid.css" type='text/css' rel="stylesheet"> -->
 <!-- <script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script> -->
 <script type="text/javascript" src="../js/jquery/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../js/angular/angular.js"></script>
 <script type="text/javascript" src="../js/bootstrap/bootstrap.js"></script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar" ng-app="liquidDemo" ng-controller="LiquidDemoCtrl">
   
 <div id='page'>
- 
-$if(notitle)$
-
-$else$
 <h1 class="title">$title$</h1>
-$endif$
 $body$
 </div>
 
