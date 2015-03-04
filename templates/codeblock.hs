@@ -28,33 +28,47 @@ main = do r    <- newIORef 0
           toJSONFilter (txBlock tplt r)
           
 txBlock :: T.Text -> IORef Int -> Block -> IO Block
+
 txBlock t r (CodeBlock (id, classes, namevals) contents)
   | isCode classes
-  = makeCodeBlock t r True contents 
-  -- = do n <- getCount r
-  --      let contents' = pad t n contents False 
-  --      return $ RawBlock (Format "html") contents'
+  = makeCodeBlock t r False contents 
 
 txBlock t r b@(RawBlock (Format "latex") str)
-  = maybe (return b) (makeCodeBlock t r False) (isCommentCode str)
-        
-  -- = do n <- getCount r
-  --      let contents  = trimLines 2 str  
-  --      let contents' = pad t n contents True
-  --      return $ RawBlock (Format "html") contents'
+  | isCommentCode str
+  = makeCodeBlock t r True (trimLines 2 str)
+  -- = maybe (return b) (makeCodeBlock t r True) (stripCode str)
+
+txBlock t r b@(RawBlock (Format "latex") str)
+  | isSpec str
+  -- = return $ trace ("SPECBLOCK: " ++ trimLines 1 str) b
+  = return $ CodeBlock ("", ["spec"], []) (trimLines 1 str)
        
 txBlock _ _ z
   = return z -- $ trace ("block:" ++ show z) z
 
-isCode             = ("haskell" `elem`)
+isCode        = ("haskell" `elem`)
+isCommentCode = isPrefixOf commentPrefix 
+isSpec        = isPrefixOf specPrefix
 
-isCommentCode str
+stripCode str 
   = do str'  <- stripPrefix commentPrefix str
        str'' <- stripSuffix commentSuffix str'
        return str''
-    where
-       commentPrefix = "\\begin{comment}\n\\begin{code}\n"
-       commentSuffix = "\\end{code}\n\\end{comment}"
+
+specPrefix    :: String
+specPrefix    = "\\begin{spec}\n"
+
+commentSuffix, commentPrefix :: String
+commentPrefix = "\\begin{comment}\n\\begin{code}\n"
+commentSuffix = "\\end{code}\n\\end{comment}"
+
+trimLines n s
+  | 2*n <= length ls = unlines $ dropEnd n $ drop n ls
+  | otherwise        = s
+  where
+    ls               = lines s 
+                             
+dropEnd n = reverse . drop n . reverse
 
 stripSuffix p s
   | isSuffixOf p s = Just $ take (length s - length p) s
