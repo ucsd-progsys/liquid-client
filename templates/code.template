@@ -31,11 +31,11 @@
     <span class="glyphicon glyphicon-fire"></span>
   </button>
 
-  <!-- Error -->
+  <!-- Crash -->
   <button class="btn btn-xs btn-link actbutton" type="button" style="color:orange; z-index:1"
           ng-show="isCrash">
     <span class="glyphicon glyphicon-exclamation-sign"></span>
   </button>
-
+  
   <div id="program-$id" class="programbox">$code</div>
 </div>

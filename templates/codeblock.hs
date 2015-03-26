@@ -4,6 +4,7 @@
 
 module CodeBlock where
 
+import System.Posix.Env
 import Data.IORef
 import Text.Pandoc.JSON
 import Text.Pandoc
@@ -21,10 +22,18 @@ import qualified Data.Text.IO as TIO
 import Data.Text.Template
 
 main :: IO ()
-main = do r    <- newIORef 0
-          tplt <- TIO.readFile "templates/code.template"
+main = do r     <- newIORef 0
+          tpltF <- templateFile
+          tplt  <- TIO.readFile tpltF -- "templates/code.template"
           toJSONFilter (txBlock tplt r)
-          
+         
+templateFile :: IO FilePath
+templateFile = do
+  fo <- getEnv "PANDOC_CODETEMPLATE"
+  case fo of
+    Nothing -> return "templates/code.template"
+    Just f  -> return f
+
 txBlock :: T.Text -> IORef Int -> Block -> IO Block
 txBlock t r (CodeBlock (id, classes, namevals) contents)
   | isCode classes
