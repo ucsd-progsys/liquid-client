@@ -269,6 +269,7 @@ function clearStatus($scope){
   $scope.isError      = false;
   $scope.isCrash      = false;
   $scope.isChecking   = false;
+  $scope.isBad        = false;
   $scope.isUnknown    = true ;
   $scope.errorBlocks  = [];
 }
@@ -288,6 +289,8 @@ function setStatusResult($scope, data){
   $scope.isUnsafe     = (result == "unsafe");
   $scope.isCrash      = (result == "crash" );
   $scope.isError      = (result == "error" );
+  $scope.isBad        = ($scope.isError || $scope.isUnsafe);
+  debugBad            = $scope.isBad;
   $scope.isUnknown    = !($scope.isSafe || $scope.isError || $scope.isUnsafe || $scope.isCrash);
   $scope.filePath     = data.path;
   return result;
@@ -333,6 +336,7 @@ function getWarns(d){
 /************** Top-Level Demo Controller **************************************/
 /*******************************************************************************/
 
+var debugBad    = false;
 var debugErrors = null;
 var debugQuery  = null;
 var debugData   = null;
