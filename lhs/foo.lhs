@@ -1,5 +1,9 @@
 ---
 title: This is my thing
+root: ".."
+author: Ranjit Jhala
+date: Sep 5th, 2014
+liquidserver: "http://goto.ucsd.edu:8090/"
 ---
 
 <div class="hidden">
