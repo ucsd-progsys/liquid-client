@@ -36,21 +36,20 @@ templateFile = do
 
 txBlock :: T.Text -> IORef Int -> Block -> IO Block
 
-txBlock t r (RawBlock (Format "latex") str)
+txBlock t r z@(RawBlock (Format "latex") str)
   | Just contents <- isSpecCode str
-  = error "FUCKED"
+  = return $ CodeBlock ("", ["spec"], []) contents
 
 txBlock t r z@(CodeBlock (id, classes, namevals) contents)
   | isCode classes
-  = let r' = trace ("zigblock: " ++ show z) r
-    in makeHtml t r' False contents
+  = makeHtml t r False contents
 
 txBlock t r (RawBlock (Format "latex") str)
   | Just contents <- isCommentCode str
   = makeHtml t r True contents
 
 txBlock _ _ z
-  = return $ trace ("zogblock:" ++ show z) z
+  = return z
 
 isCode  = ("haskell" `elem`)
 
