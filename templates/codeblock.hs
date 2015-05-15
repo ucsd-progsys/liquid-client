@@ -21,10 +21,11 @@ import qualified Data.Text.IO as TIO
 import Data.Text.Template
 
 main :: IO ()
-main = do r     <- newIORef 0
-          tpltF <- templateFile
-          tplt  <- TIO.readFile tpltF
-          toJSONFilter (txBlock tplt r)
+main = do
+  r     <- newIORef 0
+  tpltF <- templateFile
+  tplt  <- TIO.readFile tpltF
+  toJSONFilter (txBlock tplt r)
 
 templateFile :: IO FilePath
 templateFile = do
@@ -34,32 +35,46 @@ templateFile = do
     Just f  -> return f
 
 txBlock :: T.Text -> IORef Int -> Block -> IO Block
-txBlock t r (CodeBlock (id, classes, namevals) contents)
+
+txBlock t r (RawBlock (Format "latex") str)
+  | Just contents <- isSpecCode str
+  = error "FUCKED"
+
+txBlock t r z@(CodeBlock (id, classes, namevals) contents)
   | isCode classes
-  = makeHtml t r False contents
+  = let r' = trace ("zigblock: " ++ show z) r
+    in makeHtml t r' False contents
 
 txBlock t r (RawBlock (Format "latex") str)
   | Just contents <- isCommentCode str
   = makeHtml t r True contents
 
 txBlock _ _ z
-  = return z -- $ trace ("block:" ++ show z) z
+  = return $ trace ("zogblock:" ++ show z) z
 
 isCode  = ("haskell" `elem`)
 
+isSpecCode str
+  | ok              = Just $ unlines ls'
+  | otherwise       = Nothing
+  where
+    ls              = lines str
+    (c1, ls' , c1') = snip ls
+    ok              = 2 <= length ls && isSpecBlock c1 c1'
+
+
 isCommentCode str
-  | 4 <= length ls  = Just $ unlines ls''
+  | ok              = Just $ unlines ls''
   | otherwise       = Nothing
   where
     ls              = lines str
     (c1, ls' , c1') = snip ls
     (c2, ls'', c2') = snip ls'
-    ok              = isCommentBlock c1 c1' && isCodeBlock c2 c2'
+    ok              = 4 <= length ls && isCommentBlock c1 c1' && isCodeBlock c2 c2'
 
+isSpecBlock    c c' = isPrefixOf "\\begin{spec}" c    && isPrefixOf "\\end{spec}"    c'
 isCommentBlock c c' = isPrefixOf "\\begin{comment}" c && isPrefixOf "\\end{comment}" c'
 isCodeBlock    c c' = isPrefixOf "\\begin{code}" c    && isPrefixOf "\\end{code}"    c'
-
--- "\\begin{code}","module Logic where","main :: IO ()","main = return ()","","","{-@ type TRUE  = {v:Bool | Prop v} @-}","{-@ type FALSE = {v:Bool | not (Prop v)} @-}","","","","{-@ invariant {v:[a] | size v >= 0} @-}","{-@ f :: x:Int -> {v:Int | v = f x} @-}","f :: Int -> Int","f = undefined","\\end{code}","\\end{comment}"]
 
 {-@ snip :: xs:{[a] | 2 <= len xs} -> (a, {v:[a] | len v = len xs - 2}, a) @-}
 snip (x:xs)  = (x, reverse xs', x')
@@ -76,11 +91,10 @@ makeHtml t r hide contents
 wrapHide :: String -> String
 wrapHide s = unlines ["<div class=\"hidden\">", s, "</div>"]
 
-
-
-getCount r = do n <- readIORef r
-                writeIORef r (n+1)
-                return n
+getCount r = do
+  n <- readIORef r
+  writeIORef r (n+1)
+  return n
 
 pad :: T.Text -> Int -> String -> String
 pad tplt n s   = L.unpack $ substitute tplt ctx
