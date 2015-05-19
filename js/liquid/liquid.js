@@ -24,6 +24,23 @@ function replicatei(n, f) {
     return a;
 }
 
+/*******************************************************************************/
+/************** Setting Up Editor **********************************************/
+/*******************************************************************************/
+
+function toggleDisplay(d){
+  if (d === 'none') return '';
+  return 'none';
+}
+
+function toggleHidden(){
+  var elems = document.getElementsByClassName("hidden");
+  for (e in elems){
+    var cur = e.style.display;
+    e.style.display = toggleDisplay(cur);
+  }
+}
+
 
 /*******************************************************************************/
 /************** Setting Up Editor **********************************************/
