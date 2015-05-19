@@ -28,17 +28,16 @@ function replicatei(n, f) {
 /************** Setting Up Editor **********************************************/
 /*******************************************************************************/
 
-function toggleDisplay(d){
-  if (d === 'none') return '';
-  return 'none';
-}
+var hidden = true;
 
 function toggleHidden(){
-  var elems = document.getElementsByClassName("hidden");
-  for (e in elems){
-    var cur = e.style.display;
-    e.style.display = toggleDisplay(cur);
-  }
+    if (hidden) {
+      $(".hidden").removeClass("hidden").addClass("unhidden");
+      hidden = false;
+    } else {
+      $(".unhidden").removeClass("unhidden").addClass("hidden");
+      hidden = false;
+    }
 }
 
 
