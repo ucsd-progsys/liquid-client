@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts  #-}
 {-@ LIQUID "--no-termination" @-}
 
 module CodeBlock where
