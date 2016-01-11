@@ -4,6 +4,19 @@
   margin: 0;
 } */
 
+#slideshow-nav {
+  width: 30;
+  height: 20;
+  padding-top: 2px;
+  padding-left: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:99;
+}
+
+
+
 .slide {
   /* Position */
   position: absolute;
