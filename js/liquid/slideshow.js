@@ -17,10 +17,14 @@ $(function () {
   $(document).on('keydown', function (event) {
     var nextSlide = currSlide;
 
-    if (event.keyCode === 37) { // clicked left arrow
+    // https://css-tricks.com/snippets/javascript/javascript-keycodes/
+    
+    // page up
+    if (event.keyCode === 33) { 
       console.log('previous slide');
       nextSlide = currSlide ? currSlide - 1 : currSlide;
-    } else if (event.keyCode === 39) { // clicked right arrow
+    // page down
+    } else if (event.keyCode === 34) { 
       console.log('next slide');
       nextSlide = currSlide < allSlides.length - 1 ? currSlide + 1 : currSlide;
     }
