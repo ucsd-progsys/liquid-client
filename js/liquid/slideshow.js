@@ -1,12 +1,10 @@
-// Super stripped down slideshow.
-
 $(function () {
   var currSlide = 0;
-  var allSlides = $('slidesection');
+  var allSlides = $('.slide');
 
   // Initialize: Hide all
 
-  $('slidesection')
+  $('.slide')
     .removeClass('active')
     .addClass('inactive');
 

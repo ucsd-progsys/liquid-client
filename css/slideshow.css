@@ -1,14 +1,10 @@
-/*
-
-html, body {
+/* html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-}
+} */
 
- */
-
-slidesection {
+.slide {
   /* Position */
   position: absolute;
   left: 4%;
@@ -32,12 +28,12 @@ slidesection {
 
 }
 
-slidesection.active {
+.slide.active {
   visibility:visible;
   opacity:1;
 }
 
-slidesection.inactive {
+.slide.inactive {
   visibility:hidden;
   opacity:0;
 }
