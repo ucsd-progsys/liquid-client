@@ -2,11 +2,11 @@
 
 $(function () {
   var currSlide = 0;
-  var allSlides = $('section');
+  var allSlides = $('slidesection');
 
   // Initialize: Hide all
 
-  $('section')
+  $('slidesection')
     .removeClass('active')
     .addClass('inactive');
 

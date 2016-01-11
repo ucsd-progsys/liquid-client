@@ -8,7 +8,7 @@ html, body {
 
  */
 
-section {
+slidesection {
   /* Position */
   position: absolute;
   left: 4%;
@@ -32,12 +32,12 @@ section {
 
 }
 
-section.active {
+slidesection.active {
   visibility:visible;
   opacity:1;
 }
 
-section.inactive {
+slidesection.inactive {
   visibility:hidden;
   opacity:0;
 }
