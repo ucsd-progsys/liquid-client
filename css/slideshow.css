@@ -18,12 +18,12 @@
 .slide {
   /* Position */
   position: absolute;
-  left: 2%;
+  left: 1%;
   top: 2%;
 
   /* Size */
   min-height: 95%;
-  min-width: 95%;
+  min-width: 96%;
 
   /* Borders */
   border: 3px solid black;
