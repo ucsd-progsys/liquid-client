@@ -427,11 +427,10 @@ function LiquidDemoCtrl($scope, $http, $location) {
   $scope.verifySource   = function(){ verifyQuery(getCheckQuery($scope));   };
 
   // $scope.reVerifySource = function(){ verifyQuery(getRecheckQuery($scope)); };
-  $scope.jumpToProgPane = function(err) {  // $scope.gotoLink = 1 + $scope.gotoLink;
-                                            // console.log("Jump to program-pane-" + err.data + "on slide = " + slideNum);
-                                            var slideNum = progPaneSlide(err.data);
-                                            gotoSlide(slideNum);
-                                        };
+  $scope.jumpToProgPane = function(err) {  
+    var slideNum = progPaneSlide(err.data);
+    gotoSlide(slideNum);
+  };
 }
 
 /************************************************************************/

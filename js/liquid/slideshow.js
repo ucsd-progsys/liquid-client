@@ -2,8 +2,20 @@
 /************** Setting Up SlideShow ******************************************/
 /******************************************************************************/
 
-var allSlides = $('.slide');
-var currSlide = 0;
+var allSlides  = $('.slide');
+var currSlide  = 0;
+var firstSlide = 0;
+var lastSlide  = allSlides.length - 1;
+
+/* nextSlide :: (Int) => Int */
+function nextSlide(cur){
+  return (cur < allSlides.length - 1) ? cur + 1 : cur ;
+}
+
+/* prevSlide :: (Int) => Int */
+function prevSlide(cur){
+  return cur ? cur - 1 : cur;
+}
 
 /* gotoSlide :: (Int) => void */
 function gotoSlide(nextSlide){
@@ -27,18 +39,26 @@ $(function () {
 
   // Update
   $('.prevbutton').click(function (event) {
-    var nextSlide = currSlide;
     console.log('prev slide click');
-    nextSlide = currSlide ? currSlide - 1 : currSlide;
-    gotoSlide(nextSlide);
+    gotoSlide(prevSlide(currSlide));
     event.preventDefault();
    });
 
   $('.nextbutton').click(function (event) {
-    var nextSlide = currSlide;
     console.log('next slide click');
-    nextSlide = currSlide < allSlides.length - 1 ? currSlide + 1 : currSlide;
-    gotoSlide(nextSlide);
+    gotoSlide(nextSlide(currSlide));
+    event.preventDefault();
+   });
+
+  $('.firstbutton').click(function (event) {
+    console.log('first slide click');
+    gotoSlide(firstSlide);
+    event.preventDefault();
+   });
+
+  $('.lastbutton').click(function (event) {
+    console.log('last slide click');
+    gotoSlide(lastSlide);
     event.preventDefault();
    });
 
