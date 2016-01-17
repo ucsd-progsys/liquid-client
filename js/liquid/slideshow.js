@@ -50,6 +50,12 @@ $(function () {
     event.preventDefault();
    });
 
+  $('*').on("swipe",function(event){
+    console.log('next slide click');
+    gotoSlide(nextSlide(currSlide));
+    event.preventDefault();
+  });
+
   $('.firstbutton').click(function (event) {
     console.log('first slide click');
     gotoSlide(firstSlide);
