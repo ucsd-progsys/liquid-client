@@ -66,9 +66,15 @@ $(function () {
    });
   */
 
-  $('#page').on("swipe",function(event){
-    console.log('next slide swipe');
+  $('#page').on("swipeleft",function(event){
+    console.log('next slide swipeleft');
     gotoSlide(nextSlide(currSlide));
+    event.preventDefault();
+  });
+
+  $('#page').on("swiperight",function(event){
+    console.log('next slide swiperight');
+    gotoSlide(prevSlide(currSlide));
     event.preventDefault();
   });
 
