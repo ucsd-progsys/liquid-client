@@ -50,8 +50,24 @@ $(function () {
     event.preventDefault();
    });
 
-  $('*').on("swipe",function(event){
-    console.log('next slide click');
+  /*
+  $(window).on("navigate", function (event, data) {
+     var direction = data.state.direction;
+     if (direction == 'back') {
+       // do something
+       gotoSlide(prevSlide(currSlide));
+       event.preventDefault();
+     }
+     if (direction == 'forward') {
+       // do something else
+       gotoSlide(nextSlide(currSlide));
+       event.preventDefault();
+     }
+   });
+  */
+
+  $('#page').on("swipe",function(event){
+    console.log('next slide swipe');
     gotoSlide(nextSlide(currSlide));
     event.preventDefault();
   });
@@ -82,5 +98,3 @@ var elem   = $(paneId).closest(".slide");
 var pos    = allSlides.index(elem);
  */
 }
-
-
