@@ -28,6 +28,11 @@ function gotoSlide(nextSlide){
           .addClass('active');
 
     currSlide = nextSlide;
+
+    //update window.location
+    var url     = window.location.href;
+    var nextUrl = setParameterByName(url, 'slide', nextSlide);
+    history.pushState({}, "dummy", nextUrl);
   }
 }
 
@@ -42,9 +47,21 @@ function getParameterByName(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+//https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
+function setParameterByName(uri, key, value) {
+  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+  if (uri.match(re)) {
+    return uri.replace(re, '$1' + key + "=" + value + '$2');
+  }
+  else {
+    return uri + separator + key + "=" + value;
+  }
+}
+
 $(function () {
 
-  // Set slide num from URL on load. 
+  // Set slide num from URL on load.
   var slideNum = parseInt(getParameterByName('slide'));
 
   if (slideNum >= 0){
