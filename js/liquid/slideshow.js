@@ -86,15 +86,15 @@ $(function () {
    });
 
   // LEFT/RIGHT
-  $('#page').mousedown(function(event) {
+  $('#page').keydown(function(event) {
       switch (event.which) {
-          case 1:
-              console.log('LEFT-click: next slide');
+          case 39:
+              console.log('RIGHT-ARROW-click: next slide');
               gotoSlide(nextSlide(currSlide));
               event.preventDefault();
               break;
-          case 3:
-              console.log('RIGHT-click: next slide');
+          case 37:
+              console.log('LEFT-ARROW-click: prev slide');
               gotoSlide(prevSlide(currSlide));
               event.preventDefault();
               break;
