@@ -85,12 +85,37 @@ $(function () {
     event.preventDefault();
    });
 
+  // LEFT/RIGHT
+  $('#page').mousedown(function(event) {
+      switch (event.which) {
+          case 1:
+              console.log('LEFT-click: next slide');
+              gotoSlide(nextSlide(currSlide));
+              event.preventDefault();
+              break;
+          case 3:
+              console.log('RIGHT-click: next slide');
+              gotoSlide(prevSlide(currSlide));
+              event.preventDefault();
+              break;
+          default:
+              break; // alert('You have a strange Mouse!');
+      }
+  });
+
 
   $('#page').on("swipeleft",function(event){
     console.log('next slide swipeleft');
     gotoSlide(nextSlide(currSlide));
     event.preventDefault();
   });
+
+  $('#page').on("swiperight",function(event){
+    console.log('next slide swiperight');
+    gotoSlide(prevSlide(currSlide));
+    event.preventDefault();
+  });
+
 
   $('#page').on("swiperight",function(event){
     console.log('next slide swiperight');
