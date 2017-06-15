@@ -85,23 +85,53 @@ $(function () {
     event.preventDefault();
    });
 
-  // LEFT/RIGHT
-  $('#page').keydown(function(event) {
-      switch (event.which) {
-          case 39:
-              console.log('RIGHT-ARROW-click: next slide');
-              gotoSlide(nextSlide(currSlide));
-              event.preventDefault();
-              break;
-          case 37:
-              console.log('LEFT-ARROW-click: prev slide');
+
+// FWD-BACK with keydown
+$(document).keydown(function(e) {
+       switch(e.which) {
+           case 37: // left
+              console.log('LEFT-arrow: prev slide');
               gotoSlide(prevSlide(currSlide));
-              event.preventDefault();
               break;
-          default:
-              break; // alert('You have a strange Mouse!');
-      }
-  });
+
+           case 39: // right
+              console.log('LEFT-arrow: prev slide');
+              gotoSlide(nextSlide(currSlide));
+              break;
+
+           default: return; // exit this handler for other keys
+       }
+       e.preventDefault(); // prevent the default action (scroll / move caret)
+   });
+
+// FORWARD with DOUBLE CLICK.
+// $('#page').dblclick(function() {
+    // console.log('DBL-click: next slide');
+    // gotoSlide(nextSlide(currSlide));
+// });
+
+// YIKES $('#page').not('.ace_text-input')
+  // YIKES //.not('textarea')
+  // YIKES //$(':not( .ace_text-input )')
+    // YIKES .mousedown(function(event) {
+      // YIKES switch (event.which) {
+          // YIKES case 1:
+              // YIKES console.log('LEFT-click: next slide');
+              // YIKES gotoSlide(nextSlide(currSlide));
+              // YIKES event.preventDefault();
+              // YIKES break;
+          // YIKES case 3:
+              // YIKES console.log('RIGHT-click: prev slide');
+              // YIKES gotoSlide(prevSlide(currSlide));
+              // YIKES event.preventDefault();
+              // YIKES break;
+          // YIKES default:
+              // YIKES break; // alert('You have a strange Mouse!');
+      // YIKES }
+  // YIKES });
+
+
+
 
 
   $('#page').on("swipeleft",function(event){
