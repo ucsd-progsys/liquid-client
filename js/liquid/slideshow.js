@@ -147,10 +147,6 @@ $('#page').dblclick(function(e) {
       // YIKES }
   // YIKES });
 
-
-
-
-
   $('#page').on("swipeleft",function(event){
     console.log('next slide swipeleft');
     gotoSlide(nextSlide(currSlide));
@@ -191,9 +187,4 @@ function progPaneSlide(paneId){
   var elem   = $(paneId).closest(".slide");
   return allSlides.index(elem);
 
-/*
-var paneId = "#program-pane-1";
-var elem   = $(paneId).closest(".slide");
-var pos    = allSlides.index(elem);
- */
 }
