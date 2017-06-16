@@ -86,29 +86,46 @@ $(function () {
    });
 
 
-// FWD-BACK with keydown
+/* FWD-BACK with keydown -- DEPRECATED as it messes with TEXT BUFFER
+
 $(document).keydown(function(e) {
-       switch(e.which) {
+       var tag = e.target.tagName.toLowerCase();
+       if (tag != 'input' && tag != 'textarea'){
+         switch(e.which) {
            case 37: // left
               console.log('LEFT-arrow: prev slide');
               gotoSlide(prevSlide(currSlide));
+              e.preventDefault(); // prevent the default action (scroll / move caret)
               break;
 
            case 39: // right
               console.log('LEFT-arrow: prev slide');
               gotoSlide(nextSlide(currSlide));
+              e.preventDefault(); // prevent the default action (scroll / move caret)
               break;
 
-           default: return; // exit this handler for other keys
+           // default: return; // exit this handler for other keys
+         }
+         // e.preventDefault(); // prevent the default action (scroll / move caret)
        }
-       e.preventDefault(); // prevent the default action (scroll / move caret)
    });
+  */
 
 // FORWARD with DOUBLE CLICK.
-// $('#page').dblclick(function() {
-    // console.log('DBL-click: next slide');
-    // gotoSlide(nextSlide(currSlide));
-// });
+/* DISABLED but is it the PROBLEM ?!!
+$('#page').dblclick(function(e) {
+    console.log('DBL-click: next slide');
+    gotoSlide(nextSlide(currSlide));
+
+    // e.preventDefault();
+
+    // clear text selection...
+    if (window.getSelection)
+          window.getSelection().removeAllRanges();
+      else if (document.selection)
+          document.selection.empty();
+  });
+*/
 
 // YIKES $('#page').not('.ace_text-input')
   // YIKES //.not('textarea')
