@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts  #-}
 {-@ LIQUID "--no-termination" @-}
 
-module CodeBlock where
+module Main (main) where
 
 import System.Posix.Env
 import Data.IORef
