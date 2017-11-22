@@ -1,0 +1,23 @@
+name: liquid-client
+version: '0.1.0.0'
+synopsis: Client side web pages with text-panes that interact with liquid-server
+category: Web
+author: Ranjit Jhala
+maintainer: jhala@cs.ucsd.edu
+license: BSD3
+homepage: https://github.com/ucsd-progsys/liquid-client
+extra-source-files:
+- README.md
+dependencies:
+- base
+- template
+- text
+- bytestring
+- pandoc < 2.0.0
+- pandoc-types
+- unix
+
+executables:
+  filters-toc:
+    main: templates/codeblock.hs
+    ghc-options: -threaded
